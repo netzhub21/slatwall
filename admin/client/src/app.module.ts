@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {UpgradeModule} from '@angular/upgrade/static';
-import {bootstrapper} from './bootstrap';
+
+import { AppConfig }  from './appconfig';
 import {HeroDetailComponent} from './slatwall/components/herodetail.component';
 import {slatwalladminmodule} from './slatwall/slatwalladmin.module';
 
@@ -38,6 +40,8 @@ import {SlatwallAdminModule} from "./slatwall/slatwalladmin.module";
 
 @NgModule({
   providers: [
+    AppConfig,
+    { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => AppConfig.fetchData(), deps: [AppConfig], multi: true },
     parseProvider,
     logProvider,
     filterProvider,
@@ -90,11 +94,7 @@ import {SlatwallAdminModule} from "./slatwall/slatwalladmin.module";
 export class AppModule {
   constructor(private upgrade: UpgradeModule) { }
   ngDoBootstrap() {
-     var bootstrapperInstance:any = new bootstrapper();
-     bootstrapperInstance.fetchData().then(()=>{
-         //console.log('test');
-        this.upgrade.bootstrap(document.body,[slatwalladminmodule.name]);
-        console.log(this.upgrade);
-     });
+    
+     this.upgrade.bootstrap(document.body,[slatwalladminmodule.name]);
   }
 }
