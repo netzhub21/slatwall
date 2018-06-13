@@ -100,4 +100,10 @@ component entityname="SlatwallSkuPrice" table="SwSkuPrice" persistent=true acces
 			return '';
 		}
 	}
+	
+	public any function getPriceGroupOptions(){
+		var options = getPropertyOptions("priceGroup");
+		arrayAppend(options, {"name"=rbKey('define.none'), "value"=''});
+		return options;
+ 	}
 }
