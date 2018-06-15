@@ -371,6 +371,10 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 							chargeAmount += getChargeAmountByRatePercentage(arguments.orderFulfillment,shippingMethodRate.setting('shippingMethodRateHandlingFeePercentage'));
 						break;
 					}
+				} else {
+					if(!isNull(arguments.orderFulfillment.getHandlingFee())){
+						arguments.orderFulfillment.setHandlingFee(0);
+					}
 				}
 				
 				//make sure the manual rate is usable
@@ -493,10 +497,16 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 		for(var shippingMethodRatesRequestBean in shippingMethodRatesRequestBeans){
 			arrayAppend(fulfillmentMethodOptionsCacheKey,shippingMethodRatesRequestBean.getJSON());
 		}
-		var fulfillmentMethodOptionsCacheKey = hash(serializeJson(fulfillmentMethodOptionsCacheKey)&orderfulfillmentaddress & arguments.orderFulfillment.getOrder().getSubtotalAfterItemDiscounts(),'md5');
+		
+		var fulfillmentMethodOptionsCacheString = serializeJson(fulfillmentMethodOptionsCacheKey)&orderfulfillmentaddress & arguments.orderFulfillment.getOrder().getSubtotalAfterItemDiscounts();
+		
+		if(!isNull(arguments.orderFulfillment.getThirdPartyShippingAccountIdentifier()) && len(arguments.orderFulfillment.getThirdPartyShippingAccountIdentifier())){
+			fulfillmentMethodOptionsCacheString = fulfillmentMethodOptionsCacheString & arguments.orderFulfillment.getThirdPartyShippingAccountIdentifier();
+		}
+		
+		fulfillmentMethodOptionsCacheKey = hash(fulfillmentMethodOptionsCacheString,'md5');
 		
 		if(isNull(arguments.orderFulfillment.getFulfillmentMethodOptionsCacheKey()) || arguments.orderFulfillment.getFulfillmentMethodOptionsCacheKey() != fulfillmentMethodOptionsCacheKey){
-			
 			
 			var shippingMethodRateResponseBeans = getShippingMethodRatesResponseBeansByIntegrationsAndOrderFulfillment(integrations,arguments.orderFulfillment,shippingMethodRatesRequestBeans);
 			
