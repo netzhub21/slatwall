@@ -8576,7 +8576,6 @@ var DelaySubscriber = (function (_super) {
             this.schedule(state, delay_1);
         }
         else {
-            this.unsubscribe();
             source.active = false;
         }
     };
@@ -51763,7 +51762,6 @@ var SWFFormController = /** @class */ (function () {
             return formData;
         };
         this.getFileFromFormData = function (formData) {
-            var _a;
             //currently supports just one file input
             var file;
             for (var key in formData) {
@@ -51777,6 +51775,7 @@ var SWFFormController = /** @class */ (function () {
                 }
             }
             return file;
+            var _a;
         };
         this.submitForm = function () {
             if (_this.form.$valid) {

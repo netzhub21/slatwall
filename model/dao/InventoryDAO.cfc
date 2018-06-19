@@ -760,7 +760,7 @@ Notes:
 	<cffunction name="getQOQ">
 		<cfargument type="string" required="true" name="skuID" />
 		<cfargument type="string" name="locationID" />
-		<cfset locationIDExists = structKeyExists(arguments,'locationID') AND NOT isNull(arguments.locationID) AND len(arguments.locationID) />
+		<cfset var locationIDExists = structKeyExists(arguments,'locationID') AND NOT isNull(arguments.locationID) AND len(arguments.locationID) />
 		<cfquery name="local.query">
 			SELECT COALESCE( SUM(oi.quantity) ,0) as QOQ FROM swOrderItem oi
 			LEFT JOIN swOrder o 
