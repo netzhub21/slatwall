@@ -412,6 +412,7 @@ component displayname="Product" entityname="SlatwallProduct" table="SwProduct" p
 				thisImage.originalPath = getService('imageService').getProductImagePathByImageFile(skuData['imageFile']);
 				thisImage.type = "skuDefaultImage";
 				thisImage.productID = getProductID();
+				thisImage.skuID = skuData['skuID'];
 				thisImage.name = getTitle();
 				thisImage.description = getProductDescription();
 				thisImage.resizedImagePaths = [];
