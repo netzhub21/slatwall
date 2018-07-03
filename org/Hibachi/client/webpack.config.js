@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-var ForceCaseSensitivityPlugin = require('force-case-sensitivity-webpack-plugin');
 var CompressionPlugin = require("compression-webpack-plugin");
 
 var path = require('path');

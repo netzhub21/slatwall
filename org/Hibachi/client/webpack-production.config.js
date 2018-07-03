@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-var ForceCaseSensitivityPlugin = require('force-case-sensitivity-webpack-plugin');
 var CompressionPlugin = require("compression-webpack-plugin");
 
 var path = require('path');
@@ -49,7 +48,6 @@ var appConfig = {
 	    ]
 	},
     plugins: [
-        new ForceCaseSensitivityPlugin(),
         new webpack.optimize.CommonsChunkPlugin({name:"vendor", filename:"vendor.bundle.js"}),
 	    new CompressionPlugin({
 	      asset: "[path].gz[query]",
